@@ -1,0 +1,30 @@
+<div class="home-container">
+    <h2>Event List</h2>
+    <table class="event-table">
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Assigned to</th>
+          <th>Status</th>
+          <th>Action</th>
+          <th>Date</th>
+          <th>College</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of events">
+          <td>{{ event.name }}</td>
+          <td>{{ event.assignedTo }}</td>
+          <td>{{ event.status }}</td>
+          <td>
+            <button (click)="editEvent(event)">Edit</button>
+            <button (click)="deleteEvent(event)">Delete</button>
+          </td>
+          <td>{{ event.date }}</td>
+          <td>{{ event.college }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button (click)="createEvent()" class="create-btn">+ Create Event</button>
+  </div>
+  

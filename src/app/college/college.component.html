@@ -1,0 +1,11 @@
+<div class="college-container">
+    <h2>Colleges</h2>
+    <button (click)="createCollege()">+ Create College</button>
+    <div *ngFor="let college of colleges; let i = index">
+      <h3>{{ college.name }}</h3>
+      <p>{{ college.location }}</p>
+      <button (click)="editCollege(i)">Edit</button>
+      <button (click)="deleteCollege(i)">Delete</button>
+    </div>
+  </div>
+  

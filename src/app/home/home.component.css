@@ -1,0 +1,72 @@
+.home-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    text-align: center;
+  }
+  
+  .home-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .event-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .event-table th, .event-table td {
+    padding: 12px;
+    border: 1px solid #ccc;
+    text-align: left;
+  }
+  
+  .event-table th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+  }
+  
+  .event-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .event-table button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 5px; /* Add margin to create space between buttons */
+  }
+  
+  .event-table button:last-child {
+    margin-right: 0; /* Remove margin for the last button in the row */
+  }
+  
+  .event-table button:hover {
+    background-color: #0056b3;
+  }
+  
+  .create-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .create-btn:hover {
+    background-color: #218838;
+  }
+  
