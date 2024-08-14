@@ -1,4 +1,13 @@
-<div class="home-container">
+<div class="tabs">
+  <button [class.active]="activeTab === 'home'" (click)="activeTab = 'home'">Home</button>
+  <!-- Conditionally display the College tab based on isSME -->
+  <button *ngIf="!isSME" [class.active]="activeTab === 'college'" (click)="navigateToCollege()">College</button>
+  <button class="logout-btn" (click)="logout()">Logout</button>
+</div>
+
+<div class="tab-content">
+  <!-- Home Tab Content -->
+  <div *ngIf="activeTab === 'home'">
     <h2>Event List</h2>
     <table class="event-table">
       <thead>
@@ -6,25 +15,108 @@
           <th>Event</th>
           <th>Assigned to</th>
           <th>Status</th>
-          <th>Action</th>
           <th>Date</th>
           <th>College</th>
+          <!-- Hide Action column if the user is an SME -->
+          <th *ngIf="!isSME">Action</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let event of events">
-          <td>{{ event.name }}</td>
-          <td>{{ event.assignedTo }}</td>
-          <td>{{ event.status }}</td>
-          <td>
-            <button (click)="editEvent(event)">Edit</button>
-            <button (click)="deleteEvent(event)">Delete</button>
+          <td>{{ event.Event }}</td>
+          <td>{{ event.AssignedTo }}</td>
+          <td>{{ event.Status }}</td>
+          <td>{{ event.Date }}</td>
+          <td>{{ event.College }}</td>
+          <!-- Hide action buttons if the user is an SME -->
+          <td *ngIf="!isSME">
+            <button (click)="editEvent(event)" class="btn btn-primary edit-btn">Edit</button>
+            <button (click)="deleteEvent(event.Event)" class="btn btn-danger delete-btn">Delete</button>
           </td>
-          <td>{{ event.date }}</td>
-          <td>{{ event.college }}</td>
         </tr>
       </tbody>
     </table>
-    <button (click)="createEvent()" class="create-btn">+ Create Event</button>
+    <!-- Show the Create Event button if the user is not an SME -->
+    <button *ngIf="!isSME" (click)="toggleCreateForm()" class="create-btn">+ Create Event</button>
+
+    <!-- Modal for Creating an Event -->
+    <div class="modal" *ngIf="showCreateForm">
+      <div class="modal-content">
+        <span class="close" (click)="toggleCreateForm()">&times;</span>
+        <h2>Create Event</h2>
+        <form (ngSubmit)="registerEvent()">
+          <div class="form-group">
+            <label for="Event">Event Name:</label>
+            <input type="text" id="Event" [(ngModel)]="newEvent.Event" name="Event" required>
+          </div>
+          <div class="form-group">
+            <label for="AssignedTo">Assigned To:</label>
+            <select id="AssignedTo" [(ngModel)]="newEvent.AssignedTo" name="AssignedTo" required>
+              <option value="" disabled>Select SME</option>
+              <option value="SME1">SME1</option>
+              <option value="SME2">SME2</option>
+              <option value="SME3">SME3</option>
+              <option value="SME4">SME4</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="Status">Status:</label>
+            <input type="text" id="Status" [(ngModel)]="newEvent.Status" name="Status" required>
+          </div>
+          <div class="form-group">
+            <label for="Date">Date:</label>
+            <input type="date" id="Date" [(ngModel)]="newEvent.Date" name="Date" required>
+          </div>
+          <div class="form-group">
+            <label for="College">College:</label>
+            <select id="College" [(ngModel)]="newEvent.College" name="College" required>
+              <option value="" disabled>Select College</option>
+              <option *ngFor="let college of colleges" [value]="college">{{ college }}</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-success">Create Event</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal for Editing an Event -->
+    <div class="modal" *ngIf="showEditForm">
+      <div class="modal-content">
+        <span class="close" (click)="toggleEditForm()">&times;</span>
+        <h2>Edit Event</h2>
+        <form (ngSubmit)="updateEvent()">
+          <div class="form-group">
+            <label for="EditEvent">Event Name:</label>
+            <input type="text" id="EditEvent" [(ngModel)]="currentEvent.Event" name="Event" required>
+          </div>
+          <div class="form-group">
+            <label for="EditAssignedTo">Assigned To:</label>
+            <select id="EditAssignedTo" [(ngModel)]="currentEvent.AssignedTo" name="AssignedTo" required>
+              <option value="" disabled>Select SME</option>
+              <option value="SME1">SME1</option>
+              <option value="SME2">SME2</option>
+              <option value="SME3">SME3</option>
+              <option value="SME4">SME4</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="EditStatus">Status:</label>
+            <input type="text" id="EditStatus" [(ngModel)]="currentEvent.Status" name="Status" required>
+          </div>
+          <div class="form-group">
+            <label for="EditDate">Date:</label>
+            <input type="date" id="EditDate" [(ngModel)]="currentEvent.Date" name="Date" required>
+          </div>
+          <div class="form-group">
+            <label for="EditCollege">College:</label>
+            <select id="EditCollege" [(ngModel)]="currentEvent.College" name="College" required>
+              <option value="" disabled>Select College</option>
+              <option *ngFor="let college of colleges" [value]="college">{{ college }}</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-success">Update Event</button>
+        </form>
+      </div>
+    </div>
   </div>
-  
+</div>

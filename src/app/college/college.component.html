@@ -1,11 +1,54 @@
-<div class="college-container">
-    <h2>Colleges</h2>
-    <button (click)="createCollege()">+ Create College</button>
-    <div *ngFor="let college of colleges; let i = index">
-      <h3>{{ college.name }}</h3>
-      <p>{{ college.location }}</p>
-      <button (click)="editCollege(i)">Edit</button>
-      <button (click)="deleteCollege(i)">Delete</button>
-    </div>
+<div class="tabs">
+  <button [class.active]="activeTab === 'home'" (click)="navigateTo('home')">Home</button>
+  <button [class.active]="activeTab === 'college'" (click)="navigateTo('college')">College</button>
+  <button class="logout-btn" (click)="logout()">Logout</button>
+</div>
+
+<div class="tab-content">
+  <h2>College List</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>CollegeName</th>
+        <th>Address</th>
+        <th>Phone</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let college of colleges">
+        <td>{{ college.CollegeName }}</td>
+        <td>{{ college.Address }}</td>
+        <td>{{ college.Phone }}</td>
+        <td>
+          <button (click)="editCollege(college)" class="btn btn-primary edit-btn">Edit</button>
+          <button (click)="deleteCollege(college.CollegeName)" class="btn btn-danger delete-btn">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button (click)="toggleCreateForm()" class="create-btn">+ Add College</button>
+</div>
+
+<!-- Modal for Creating or Editing a College -->
+<div class="modal" *ngIf="showCreateForm">
+  <div class="modal-content">
+    <span class="close" (click)="toggleCreateForm()">&times;</span>
+    <h2>{{ isEditMode ? 'Edit College' : 'Add College' }}</h2>
+    <form (ngSubmit)="registerOrUpdateCollege()">
+      <div class="form-group">
+        <label for="CollegeName">College Name:</label>
+        <input type="text" id="CollegeName" [(ngModel)]="newCollege.CollegeName" name="CollegeName" required>
+      </div>
+      <div class="form-group">
+        <label for="Address">Address:</label>
+        <input type="text" id="Address" [(ngModel)]="newCollege.Address" name="Address" required>
+      </div>
+      <div class="form-group">
+        <label for="Phone">Phone:</label>
+        <input type="text" id="Phone" [(ngModel)]="newCollege.Phone" name="Phone" required>
+      </div>
+      <button type="submit" class="btn btn-success">{{ isEditMode ? 'Update' : 'Register' }}</button>
+    </form>
   </div>
-  
+</div>
